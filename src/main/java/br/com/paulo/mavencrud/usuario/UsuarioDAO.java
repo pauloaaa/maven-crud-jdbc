@@ -1,4 +1,4 @@
-package br.com.paulo.mavencrud.usuariodao;
+package br.com.paulo.mavencrud.usuario;
 
 import br.paulo.mavencrud.mavencrud.dao.Conexao;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author paulo
  */
-class UsuarioDAO {
+public class UsuarioDAO {
 
     private final Connection con = Conexao.getConnection();
 
@@ -32,7 +32,7 @@ class UsuarioDAO {
         }
     }
 
-    public void cadastrar(Usuario usuario) {
+    public void cadastrar(Usuario usuario) throws SQLException {
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO USUARIO (nome, login, senha) VALUES (?,?,?)");
         try {
@@ -41,8 +41,8 @@ class UsuarioDAO {
             prepSt.setString(2, usuario.getLogin());
             prepSt.setString(3, usuario.getSenha());
             prepSt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Erro ao cadastrar no banco de dados .: " + e.getMessage());
+        } catch (SQLException ex) {
+            throw ex;
         } finally {
             sql.delete(0, sql.length());
             sql = null;

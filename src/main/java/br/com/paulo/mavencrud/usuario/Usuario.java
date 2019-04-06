@@ -1,4 +1,4 @@
-package br.com.paulo.mavencrud.usuariodao;
+package br.com.paulo.mavencrud.usuario;
 
 /**
  *
