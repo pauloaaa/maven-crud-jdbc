@@ -15,10 +15,18 @@
         <title> .: Listar Usuário :. </title>
     </head>
     <body>
-
-        <c:forEach var="usuario" items="${usuarios}">
-            ${usuario.nome}
-        </c:forEach>
-
+        <div>
+            <c:import url="menu.jsp"/>
+        </div>
+        <br>
+        <table border="1">
+            <c:forEach var="usuario" items="${usuarios}" varStatus="index">
+                <tr bgcolor="#${index.count % 2 == 0 ? 'aaee88' : 'ffffff'}">
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.login}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </body>
 </html>

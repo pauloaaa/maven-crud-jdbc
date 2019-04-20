@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,13 +27,17 @@ public class FiltroAutenticacao implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) sr;
         HttpServletResponse response = (HttpServletResponse) sr1;
-        
-        String uri = request.getRequestURL().toString();
-        
-        System.out.println("uri = " + uri);
 
-        fc.doFilter(sr, sr1);
-        System.out.println("do filter");
+        String uri = request.getRequestURL().toString();
+
+        HttpSession sessao = request.getSession(false);
+
+        if (sessao != null || uri.contains("login.html") || uri.contains("autenticadorcontrolador.do")) {
+            fc.doFilter(sr, sr1);
+        } else {
+            response.sendRedirect("login.html");
+        }
+
     }
 
     @Override

@@ -18,6 +18,15 @@ import javax.servlet.http.HttpSession;
 public class AutenticadorControlador extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession sessao = req.getSession(false);
+        if (sessao != null) {
+            sessao.invalidate();
+        }
+        req.getRequestDispatcher("login.html").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String login = req.getParameter("login");

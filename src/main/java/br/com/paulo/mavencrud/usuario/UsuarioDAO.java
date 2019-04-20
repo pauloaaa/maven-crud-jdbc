@@ -34,7 +34,7 @@ public class UsuarioDAO {
 
     public void cadastrar(Usuario usuario) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO USUARIO (nome, login, senha) VALUES (?,?,?)");
+        sql.append("INSERT INTO USUARIO (nome, login, senha) VALUES (?,?,md5(?))");
         try {
             PreparedStatement prepSt = con.prepareStatement(sql.toString());
             prepSt.setString(1, usuario.getNome());
@@ -135,7 +135,7 @@ public class UsuarioDAO {
         int index = 0;
         try {
 
-            sql = "SELECT id, nome FROM usuario WHERE login = ? AND senha = ?";
+            sql = "SELECT id, nome FROM usuario WHERE login = ? AND senha = md5(?)";
             prepSt = con.prepareStatement(sql);
 
             prepSt.setString(++index, usuario.getLogin());
