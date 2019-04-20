@@ -127,4 +127,43 @@ public class UsuarioDAO {
 
     }
 
+    protected Usuario autenticar(Usuario usuario) throws SQLException {
+        Usuario u = null;
+        PreparedStatement prepSt = null;
+        ResultSet rs = null;
+        String sql = "";
+        int index = 0;
+        try {
+
+            sql = "SELECT id, nome FROM usuario WHERE login = ? AND senha = ?";
+            prepSt = con.prepareStatement(sql);
+
+            prepSt.setString(++index, usuario.getLogin());
+            prepSt.setString(++index, usuario.getSenha());
+
+            rs = prepSt.executeQuery();
+
+            if (rs.next()) {
+                u = new Usuario();
+                u.setId(rs.getInt("id"));
+                u.setNome(rs.getString("nome"));
+            }
+
+            return u;
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            if (prepSt != null && prepSt.isClosed()) {
+                prepSt.close();
+                prepSt = null;
+            }
+            if (rs != null && rs.isClosed()) {
+                rs.close();
+                rs = null;
+            }
+            u = null;
+        }
+
+    }
+
 }
