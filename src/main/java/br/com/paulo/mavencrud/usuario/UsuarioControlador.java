@@ -30,25 +30,43 @@ public class UsuarioControlador extends HttpServlet {
 
         UsuarioBO usuarioBO = new UsuarioBO();
         usuarioBO.cadastrar(usuario);
+        
+        resp.sendRedirect("usuariocontrolador.do?acao=listar");
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        UsuarioBO bo = null;
+        RequestDispatcher dispatcher = null;
+        List<Usuario> usuarios = null;
+        String acao = "";
+        try {
 
-        String acao = req.getParameter("acao");
+            acao = req.getParameter("acao");
 
-        if (acao.equals("listar")) {
+            if (acao.equals("listar")) {
 
-            UsuarioBO usuarioBO = new UsuarioBO();
-            List<Usuario> usuarios = usuarioBO.listarUsuario();
+                bo = new UsuarioBO();
+                usuarios = bo.listarUsuario();
 
-            req.setAttribute("usuarios", usuarios);
+                req.setAttribute("usuarios", usuarios);
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/listar_usuario.jsp");
-            dispatcher.forward(req, resp);
+                dispatcher = req.getRequestDispatcher("/listar_usuario.jsp");
+                dispatcher.forward(req, resp);
 
+            } else if (acao.equals("novoCadastro")) {
+
+                dispatcher = req.getRequestDispatcher("/cadastrar_usuario.html");
+                dispatcher.forward(req, resp);
+
+            }
+        } finally {
+            bo = null;
+            dispatcher = null;
+            usuarios = null;
+            acao = null;
         }
 
     }

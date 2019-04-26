@@ -6,4 +6,5 @@
 
 <a href="index.jsp">Home</a>
 <a href="usuariocontrolador.do?acao=listar">Usuários</a>
+<a href="usuariocontrolador.do?acao=novoCadastro">Cadastrar</a>
 <a href="autenticadorcontrolador.do">Sair</a>
